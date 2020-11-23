@@ -1,18 +1,16 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
-<%= link_to("新規", "/posts/new")%>
-<% @posts.each do |post| %>
-<div class="post">
-    <p>ID: <%= post.id %></p>
-    <p>URL: <%= post.url %></p>
-    <p>コメント: <%= post.comment %></p>
-    <p>埋め込みコンテンツ</p>
-    <p> <%=
-     if post.embed 
-        post.embed
-     else 
-        "なし"
-     end
-     %>
+<div class="container mt-3">
+    <%= link_to("/posts/new") do %>
+    <button type="submit" class="btn btn-primary">新規</button>
+    <% end %>
+    <% @posts.each do |post| %>
+    <div class="container border bg-light shadow-sm p-2 m-3 rounded">
+        <p>ID: <%= post.id %></p>
+        <p>URL: <%= post.url %></p>
+        <p>コメント: <%= post.comment %></p>
+        <% if post.embed %>
+        <%= post.embed %>
+        <% end %>
+    </div>
+    <% end %>
+
 </div>
-<% end %>

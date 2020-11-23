@@ -1,31 +1,38 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/new.html.erb</p>
-<p>Sample URL: https://twitter.com/TwitterJP/status/1329986158193872899?s=20 </p>
+<div class="container mt-3">
+    <p class="alert alert-info">Sample URL: https://twitter.com/TwitterJP/status/1329986158193872899?s=20 </p>
 
-<%= form_tag("/posts/create") do %>
-<div class="form">
-    <div class="form-body">
-        <p>URL(TODO: 入力欄を大きくする)</p>
-        <input id="url" name="url_form" value="<%=@url%>">
-        <p>コメント</p>
-        <textarea name="comment"><%=@comment%></textarea>
-        <input type="submit" value="投稿">
+    <%= form_tag("/posts/create") do %>
+    <div class="form">
+        <div class="form-body">
+            <div class="form-group">
+                <label for="url">URL:</label>
+                <input type="text" id="url" name="url_form" class="form-control" autocomplete="off" value="<%=@url%>">
+            </div>
+            <div class="form-group">
+                <label for="comment">コメント:</label>
+                <textarea id="comment" name="comment" class="form-control"><%=@comment%></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">新規</button>
+        </div>
     </div>
-</div>
-<% end %>
+    <% end %>
 
 
-<div id="embed">
-    <p><%= @url %></p>
-    <%= @embed %>
-    <p><%= @error_msg %></p>
+    <div id="embed">
+        <p><%= @url %></p>
+        <%= @embed %>
+        <p><%= @error_msg %></p>
+    </div>
+
 </div>
 <script type="text/javascript">
     $(function() {
         $url = $("#url")
         $url.change(function() {
             const url = $url.val()
-            location.href = "/posts/new?url=" + url;
+            if (url !== "") {
+                location.href = "/posts/new?url=" + url;
+            }
         })
     });
 </script>
