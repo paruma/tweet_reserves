@@ -29,6 +29,7 @@ class PostsController < ApplicationController
     )
     if @post.save
        redirect_to("/posts/index")
+       flash[:success] = "投稿に成功しました"
     else
        render("/posts/new")
     end
