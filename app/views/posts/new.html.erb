@@ -1,0 +1,31 @@
+<h1>Posts#new</h1>
+<p>Find me in app/views/posts/new.html.erb</p>
+<p>Sample URL: https://twitter.com/TwitterJP/status/1329986158193872899?s=20 </p>
+
+<%= form_tag("/posts/create") do %>
+<div class="form">
+    <div class="form-body">
+        <p>URL(TODO: 入力欄を大きくする)</p>
+        <input id="url" name="url" value="<%=@url%>">
+        <p>コメント</p>
+        <textarea name="comment"></textarea>
+        <input type="submit" value="投稿">
+    </div>
+</div>
+<% end %>
+
+
+<div id="embed">
+    <p><%= @url %></p>
+    <%= @embed %>
+    <p><%= @error_msg %></p>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $url = $("#url")
+        $url.change(function() {
+            const url = $url.val()
+            location.href = "/posts/new?url=" + url;
+        })
+    });
+</script>

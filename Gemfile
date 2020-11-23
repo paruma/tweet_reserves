@@ -64,3 +64,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # ここまでテンプレート
 
 gem 'ruby-oembed'
+gem 'jquery-rails'
