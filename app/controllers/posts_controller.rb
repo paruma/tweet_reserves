@@ -4,12 +4,6 @@ OEmbed::Providers.register_all
 class PostsController < ApplicationController
   def index
     @posts = Post.all
-    OEmbed::Providers.register_all
-    embed_json = OEmbed::Providers.get('http://www.youtube.com/watch?v=2BYXBC8WQ5k')
-    if embed_json
-      @twitter_html = embed_json.html.html_safe
-    end
-    
   end
 
   def new
@@ -24,5 +18,20 @@ class PostsController < ApplicationController
     rescue => error
       @error_msg = "URLが間違っています。"
     end
+  end
+
+  def create
+    @url = params[:url_form]
+    @comment = params[:comment]
+    @post = Post.new(
+      comment: @comment,
+      url: @url
+    )
+    if @post.save
+       redirect_to("/posts/index")
+    else
+       render("/posts/new")
+    end
+
   end
 end

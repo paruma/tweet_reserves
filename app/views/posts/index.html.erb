@@ -2,10 +2,17 @@
 <p>Find me in app/views/posts/index.html.erb</p>
 <%= link_to("新規", "/posts/new")%>
 <% @posts.each do |post| %>
-<p><%= post.comment %></p>
+<div class="post">
+    <p>ID: <%= post.id %></p>
+    <p>URL: <%= post.url %></p>
+    <p>コメント: <%= post.comment %></p>
+    <p>埋め込みコンテンツ</p>
+    <p> <%=
+     if post.embed 
+        post.embed
+     else 
+        "なし"
+     end
+     %>
+</div>
 <% end %>
-
-<%= @twitter_html.html_safe %>
-<!-- もはやTwitterに限る必要性のなさ-->
-<%= OEmbed::Providers.get('http://www.youtube.com/watch?v=2BYXBC8WQ5k').html.html_safe%>
-<%= OEmbed::Providers.get('https://twitter.com/TwitterJP/status/1329986158193872899?s=20').html.html_safe%>
