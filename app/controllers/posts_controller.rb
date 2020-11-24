@@ -3,7 +3,12 @@ OEmbed::Providers.register_all
 
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @tweet_sender = params[:tweet_sender]
+    if @tweet_sender
+      @posts = Post.where(tweet_sender: @tweet_sender)
+    else
+      @posts = Post.all
+    end
   end
 
   def new
@@ -25,14 +30,22 @@ class PostsController < ApplicationController
     render :json => { embed: embed, error_msg: error_msg}
   end
 
-
+  def match_user(url)
+    result = url.match(/twitter.com\/(.+)\/status/)
+    if result.length >= 2
+      return result[1]
+    end
+    return ""
+  end
 
   def create
     @url = params[:url_form]
     @comment = params[:comment]
+    tweet_sender = match_user(@url)
     @post = Post.new(
       comment: @comment,
-      url: @url
+      url: @url,
+      tweet_sender: tweet_sender
     )
     if @post.save
        redirect_to("/posts/index")
@@ -40,6 +53,11 @@ class PostsController < ApplicationController
     else
        render("/posts/new")
     end
+  end
 
+  def edit
+  end
+
+  def update
   end
 end
