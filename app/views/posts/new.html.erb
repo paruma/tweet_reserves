@@ -19,9 +19,8 @@
 
 
     <div id="embed">
-        <p><%= @url %></p>
-        <%= @embed %>
-        <p><%= @error_msg %></p>
+    </div>
+    <div id="error_msg">
     </div>
 
 </div>
@@ -31,7 +30,17 @@
         $url.change(function() {
             const url = $url.val()
             if (url !== "") {
-                location.href = "/posts/new?url=" + url;
+                // 参考: [【Railsで非同期通信】RailsでAjaxを利用する時にjQueryを使う方法 \| shin>>media](https://shinmedia20.com/rails-ajax-jquery)
+                $.ajax({
+                    url: '/posts/preview',
+                    type: 'GET',
+                    data: {
+                        url: url
+                    }
+                }).done(function(data) {
+                    $("#embed").html(data.embed)
+                    $("#error_msg").html(data.error_msg)
+                });
             }
         })
     });

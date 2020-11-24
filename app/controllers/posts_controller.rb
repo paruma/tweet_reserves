@@ -7,18 +7,25 @@ class PostsController < ApplicationController
   end
 
   def new
-    @url = params[:url]
+  end
+
+
+  def preview
+    url = params[:url]
     begin
-      if @url
-        embed_json = OEmbed::Providers.get(@url)
+      if url
+        embed_json = OEmbed::Providers.get(url)
         if embed_json
-          @embed = embed_json.html.html_safe
+          embed = embed_json.html.html_safe
         end
       end
     rescue => error
-      @error_msg = "URLが間違っています。"
+      error_msg = "URLが間違っています。"
     end
+    render :json => { embed: embed, error_msg: error_msg}
   end
+
+
 
   def create
     @url = params[:url_form]
