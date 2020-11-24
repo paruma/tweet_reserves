@@ -2,15 +2,30 @@
     <%= link_to("/posts/new") do %>
     <button type="submit" class="btn btn-primary">新規</button>
     <% end %>
-    <% @posts.each do |post| %>
-    <div class="container border bg-light shadow-sm p-2 m-3 rounded">
-        <p>ID: <%= post.id %></p>
-        <p>URL: <%= post.url %></p>
-        <p>コメント: <%= post.comment %></p>
+    <div class="card-columns mt-3" style="columns: 2">
+
+        <% @posts.each do |post| %>
+        <!--
+    <div class="containe border bg-light shadow-sm p-3 m-3 rounded w-50">
+        <p><%= post.comment %></p>
         <% if post.embed %>
         <%= post.embed %>
         <% end %>
     </div>
-    <% end %>
+    -->
+        <div class="card bg-light">
+            <div class="card-body">
+                <p><%= post.comment %></p>
+                <% if post.embed %>
+                <%= post.embed %>
+                <% end %>
+                <div class="text-right text-muted">
+                    <small><%= post.updated_at.in_time_zone('Tokyo').strftime("%Y年%m月%d日 %H:%M")%></small>
+                </div>
+
+            </div>
+        </div>
+        <% end %>
+    </div>
 
 </div>
