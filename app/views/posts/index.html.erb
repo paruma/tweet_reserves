@@ -28,8 +28,11 @@
                 <% if post.embed %>
                 <%= post.embed %>
                 <% end %>
-                <div class="text-right text-muted">
-                    <small><%= post.updated_at.in_time_zone('Tokyo').strftime("%Y年%m月%d日 %H:%M")%></small>
+                <div class="text-right">
+                    <small><%= 
+                        msg = post.updated_at.in_time_zone('Tokyo').strftime("%Y年%m月%d日 %H:%M")
+                        link_to(msg, "/posts/#{post.id}/edit", class: "text-muted")
+                    %></small>
                 </div>
 
             </div>

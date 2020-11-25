@@ -1,0 +1,72 @@
+<div class="container mt-3">
+    <p class="alert alert-info">Sample URL: https://twitter.com/TwitterJP/status/1329986158193872899?s=20 </p>
+
+    <%= form_tag("/posts/#{@post.id}/update") do %>
+    <div class="form">
+        <div class="form-body">
+            <div class="form-group">
+                <label for="url">URL:</label>
+                <input type="text" id="url" name="url_form" class="form-control" autocomplete="off" value="<%=@post.url%>">
+            </div>
+            <div class="form-group">
+                <label for="comment">コメント:</label>
+                <textarea id="comment" name="comment" class="form-control"><%=@post.comment%></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+    </div>
+    <% end %>
+
+
+    <div id="embed">
+    </div>
+    <div id="error_msg">
+    </div>
+
+    <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#modal1">
+        削除
+    </button>
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="label1">投稿を削除します</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    この投稿を本当に削除しますか？削除後はもとに戻すことはできません。
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                    <%= link_to("/posts/#{@post.id}/destroy", {method: "post"}) do %>
+                    <button type="submit button" class="btn btn-danger">削除する</button>
+                    <%end%>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(function() {
+        $url = $("#url")
+        $url.change(function() {
+            const url = $url.val()
+            if (url !== "") {
+                // 参考: [【Railsで非同期通信】RailsでAjaxを利用する時にjQueryを使う方法 \| shin>>media](https://shinmedia20.com/rails-ajax-jquery)
+                $.ajax({
+                    url: '/posts/preview',
+                    type: 'GET',
+                    data: {
+                        url: url
+                    }
+                }).done(function(data) {
+                    $("#embed").html(data.embed)
+                    $("#error_msg").html(data.error_msg)
+                });
+            }
+        })
+    });
+</script>
