@@ -57,7 +57,6 @@ class PostsController < ApplicationController
     )
     
     if @post.save
-      # todo: TagPost系はすべて消す
       params[:tag_ids].each do |tag_id_str|
         tag_id = tag_id_str.to_i
         post_tag = @post.post_tags.build(tag_id: tag_id)
@@ -73,6 +72,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find_by(id: params[:id])
+    @tags = Tag.all
   end
 
   def update
@@ -81,6 +81,14 @@ class PostsController < ApplicationController
     @post.comment = params[:comment]
     @post.tweet_sender = match_user(@post.url)
     if @post.save
+      # もともと投稿につけられていたタグをすべて削除する
+      @post.tags.destroy_all
+      # タグの追加
+      params[:tag_ids].each do |tag_id_str|
+        tag_id = tag_id_str.to_i
+        post_tag = @post.post_tags.build(tag_id: tag_id)
+        post_tag.save
+      end
       flash[:success] = "編集に成功しました"
       redirect_to("/posts/index")
       else

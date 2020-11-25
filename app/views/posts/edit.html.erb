@@ -1,28 +1,39 @@
 <div class="container mt-3">
     <p class="alert alert-info">Sample URL: https://twitter.com/TwitterJP/status/1329986158193872899?s=20 </p>
 
-    <%= form_tag("/posts/#{@post.id}/update") do %>
-    <div class="form">
-        <div class="form-body">
-            <div class="form-group">
-                <label for="url">URL:</label>
-                <input type="text" id="url" name="url_form" class="form-control" autocomplete="off" value="<%=@post.url%>">
+    <div class="row">
+        <div class="col-6">
+            <%= form_tag("/posts/#{@post.id}/update") do %>
+            <div class="form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="url">URL:</label>
+                        <input type="text" id="url" name="url_form" class="form-control" autocomplete="off" value="<%=@post.url%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">コメント:</label>
+                        <textarea id="comment" name="comment" class="form-control"><%=@post.comment%></textarea>
+                    </div>
+                    <div class="form-group">
+                        <% @tags.each do |tag| %>
+                        <div class="form-check d-inline mr-3">
+                            <input class="form-check-input" type="checkbox" name="tag_ids[]" value="<%=tag.id%>" <% if @post.tagged_with?(tag)%>checked <% end %>>
+                            <label class="form-check-label" for="check1a"><%= tag.name%></label>
+                        </div>
+                        <% end%>
+                    </div>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="comment">コメント:</label>
-                <textarea id="comment" name="comment" class="form-control"><%=@post.comment%></textarea>
+            <% end %>
+        </div>
+        <div class="col-6">
+            <div id="embed">
             </div>
-            <button type="submit" class="btn btn-primary">保存</button>
+            <div id="error_msg">
+            </div>
         </div>
     </div>
-    <% end %>
-
-
-    <div id="embed">
-    </div>
-    <div id="error_msg">
-    </div>
-
     <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#modal1">
         削除
     </button>

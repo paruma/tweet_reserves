@@ -19,4 +19,8 @@ class Post < ApplicationRecord
           return nil
         end
     end
+
+    def tagged_with?(tag)
+      self.post_tags.where(tag_id: tag.id).exists? 
+    end
 end
