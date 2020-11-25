@@ -7,5 +7,12 @@ Rails.application.routes.draw do
   get "posts/:id/edit" => "posts#edit"
   post "posts/:id/update" => "posts#update"
   post "posts/:id/destroy" => "posts#destroy"
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get "tags/index" => "tags#index"
+  get "tags/new" => "tags#new"
+  post "tags/create" => "tags#create"
+  get "tags/:id/edit" => "tags#edit"
+  post "tags/:id/update" => "tags#update"
+  post "tags/:id/destroy" => "tags#destroy"
+
 end

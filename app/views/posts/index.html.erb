@@ -6,6 +6,11 @@
             <% end %>
         </div>
         <div class="col-xs-3 m-3">
+            <%= link_to("/tags/index") do %>
+            <button type="submit" class="btn btn-secondary">タグ一覧</button>
+            <% end %>
+        </div>
+        <div class="col-xs-3 m-3">
             <%= form_tag("/posts/index", method: :get) do %>
             <div class="input-group">
                 <div class="input-group-prepend">

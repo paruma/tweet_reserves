@@ -1,0 +1,13 @@
+<div class="container mt-3">
+    <%= form_tag("/tags/create") do %>
+    <div class="form">
+        <div class="form-body">
+            <div class="form-group">
+                <label for="url">タグ名:</label>
+                <input type="text" id="name" name="name_form" class="form-control" autocomplete="off" value="<%=@tag.name%>">
+            </div>
+            <button type="submit" class="btn btn-primary">新規作成</button>
+        </div>
+    </div>
+    <% end %>
+</div>

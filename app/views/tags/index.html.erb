@@ -1,0 +1,28 @@
+<div class="container mt-3">
+    <h1>タグ</h1>
+    <div class="row">
+        <div class="col-xs-3 m-3">
+            <%= link_to("/tags/new") do %>
+            <button type="submit" class="btn btn-primary">新規タグ</button>
+            <% end %>
+        </div>
+    </div>
+    <h2>タグが付いている投稿一覧へのリンク</h2>
+    <div class="container m-3">
+        <% @tags.each do |tag| %>
+        <%= link_to("/posts/index?tag=#{tag.id}") do %>
+        <span class="badge badge-secondary"><%= tag.name %></span>
+        <%end%>
+        <%end%>
+    </div>
+    <h2> タグ編集 </h2>
+    <div class="container m-3">
+        <% @tags.each do |tag| %>
+        <%= link_to("/tags/#{tag.id}/edit") do %>
+        <span class="badge badge-secondary"><%= tag.name %></span>
+        <%end%>
+        <%end%>
+    </div>
+
+
+</div>
