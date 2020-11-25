@@ -3,10 +3,13 @@ OEmbed::Providers.register_all
 
 class PostsController < ApplicationController
   def index
-    @tweet_sender = params[:tweet_sender]
     @id = params[:id]
+    @tag_id = params[:tag]
+    @tweet_sender = params[:tweet_sender]
     if @id
       @posts = Post.where(id: @id)
+    elsif @tag_id
+      @posts = Tag.find_by(id: @tag_id).posts
     elsif @tweet_sender
       @posts = Post.where(tweet_sender: @tweet_sender)
     else
@@ -16,6 +19,7 @@ class PostsController < ApplicationController
   end
 
   def new
+    @tags = Tag.all
   end
 
 
@@ -51,7 +55,15 @@ class PostsController < ApplicationController
       url: @url,
       tweet_sender: tweet_sender
     )
+    
     if @post.save
+      # todo: TagPost系はすべて消す
+      params[:tag_ids].each do |tag_id_str|
+        tag_id = tag_id_str.to_i
+        post_tag = @post.post_tags.build(tag_id: tag_id)
+        post_tag.save
+      end
+
        flash[:success] = "投稿に成功しました"
        redirect_to("/posts/index")
     else

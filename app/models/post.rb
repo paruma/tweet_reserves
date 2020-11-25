@@ -2,6 +2,9 @@ require "oembed"
 OEmbed::Providers.register_all
 
 class Post < ApplicationRecord
+    has_many :post_tags, dependent: :destroy
+    has_many :tags, :through => :post_tags
+
     def embed()
         url = self.url
         begin 

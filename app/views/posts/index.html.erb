@@ -1,16 +1,16 @@
 <div class="container mt-3">
     <div class="row">
-        <div class="col-xs-3 m-3">
+        <div class="d-inline m-3">
             <%= link_to("/posts/new") do %>
             <button type="submit" class="btn btn-primary">新規投稿</button>
             <% end %>
         </div>
-        <div class="col-xs-3 m-3">
+        <div class="d-inline m-3">
             <%= link_to("/tags/index") do %>
             <button type="submit" class="btn btn-secondary">タグ一覧</button>
             <% end %>
         </div>
-        <div class="col-xs-3 m-3">
+        <div class="d-inline m-3">
             <%= form_tag("/posts/index", method: :get) do %>
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -33,6 +33,13 @@
                 <% if post.embed %>
                 <%= post.embed %>
                 <% end %>
+
+                <% post.tags.each do |tag| %>
+                <%= link_to("/posts/index?tag=#{tag.id}") do %>
+                <span class="badge badge-secondary"><%= tag.name %></span>
+                <%end%>
+                <%end%>
+
                 <div class="text-right">
                     <small><%= 
                         msg = post.updated_at.in_time_zone('Tokyo').strftime("%Y年%m月%d日 %H:%M")

@@ -1,27 +1,43 @@
 <div class="container mt-3">
     <p class="alert alert-info">Sample URL: https://twitter.com/TwitterJP/status/1329986158193872899?s=20 </p>
 
-    <%= form_tag("/posts/create") do %>
-    <div class="form">
-        <div class="form-body">
-            <div class="form-group">
-                <label for="url">URL:</label>
-                <input type="text" id="url" name="url_form" class="form-control" autocomplete="off" value="<%=@url%>">
+    <div class="row">
+        <div class="col-6">
+            <%= form_tag("/posts/create") do %>
+            <div class="form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="url">URL:</label>
+                        <input type="text" id="url" name="url_form" class="form-control" autocomplete="off" value="<%=@url%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">コメント:</label>
+                        <textarea id="comment" name="comment" class="form-control"><%=@comment%></textarea>
+                    </div>
+                    <div class="form-group">
+                        <% @tags.each do |tag| %>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="tag_ids[]" value="<%=tag.id%>">
+                            <label class="form-check-label" for="check1a"><%= tag.name%></label>
+                        </div>
+                        <% end%>
+
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">投稿</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="comment">コメント:</label>
-                <textarea id="comment" name="comment" class="form-control"><%=@comment%></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">投稿</button>
+            <% end %>
         </div>
-    </div>
-    <% end %>
+        <div class="col-6">
+            <div id="embed">
+            </div>
+            <div id="error_msg">
+            </div>
+        </div>
 
+    </div>
 
-    <div id="embed">
-    </div>
-    <div id="error_msg">
-    </div>
 
 </div>
 <script type="text/javascript">
