@@ -4,11 +4,15 @@ OEmbed::Providers.register_all
 class PostsController < ApplicationController
   def index
     @tweet_sender = params[:tweet_sender]
-    if @tweet_sender
+    @id = params[:id]
+    if @id
+      @posts = Post.where(id: @id)
+    elsif @tweet_sender
       @posts = Post.where(tweet_sender: @tweet_sender)
     else
       @posts = Post.all
     end
+    @posts = @posts.order(updated_at: :desc)
   end
 
   def new
