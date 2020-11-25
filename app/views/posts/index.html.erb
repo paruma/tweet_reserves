@@ -24,7 +24,7 @@
         <% @posts.each do |post| %>
         <div class="card bg-light">
             <div class="card-body">
-                <p><%= post.comment %></p>
+                <%= simple_format(post.comment) %>
                 <% if post.embed %>
                 <%= post.embed %>
                 <% end %>
